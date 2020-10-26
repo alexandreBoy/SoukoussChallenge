@@ -4,44 +4,51 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".controller.MainActivity">
 
     <TextView
-        android:id="@+id/activity_main_bestScoresLabel"
-        android:layout_width="250dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="24dp"
-        android:text="@string/bestScoresLabel"
-        android:textSize="28sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_name"
+        android:textSize="32sp"
         android:textAlignment="center"
         android:gravity="center_horizontal"
-        app:layout_constraintBottom_toTopOf="@id/activity_main_bestScoresTable"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TableLayout
-        android:id="@+id/activity_main_bestScoresTable"
-        android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="30dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/activity_main_bestScoresLabel"
-        app:layout_constraintBottom_toTopOf="@id/activity_main_startButton" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/activity_main_startButton"/>
 
     <Button
         android:id="@+id/activity_main_startButton"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:text="@string/startButton"
+        android:textSize="24sp"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/activity_main_bestScoresTable"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
+
+    <Button
+        android:id="@+id/activity_main_scoreButton"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:text="@string/scoreButton"
+        android:textSize="24sp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="50dp"
+        app:layout_constraintBottom_toTopOf="@id/activityMain_guideline1"
+        app:layout_constraintTop_toBottomOf="@id/activity_main_startButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/activityMain_guideline1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.65"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
