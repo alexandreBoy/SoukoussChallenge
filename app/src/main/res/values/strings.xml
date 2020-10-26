@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">SoukoussChallenge</string>
+    <string name="bestScoresLabel">Meilleurs scores</string>
+    <string name="startButton">Commencer une nouvelle partie</string>
 </resources>
