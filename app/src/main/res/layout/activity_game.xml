@@ -75,6 +75,7 @@
         app:layout_constraintGuide_percent="0.95"/>
 
     <ImageButton
+        android:id="@+id/activity_game_pauseButton"
         android:layout_width="50dp"
         android:layout_height="50dp"
         app:layout_constraintLeft_toLeftOf="@id/activityGame_guideline3"
