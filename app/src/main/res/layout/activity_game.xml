@@ -82,7 +82,8 @@
         app:layout_constraintRight_toRightOf="@id/activityGame_guideline4"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="@id/activityGame_guideline1"
-        android:src="@drawable/baseline_pause_black_18dp"/>
+        android:src="@drawable/baseline_pause_black_18dp"
+        android:contentDescription="@string/contentDescriptionIB" />
 
 
 

@@ -9,4 +9,5 @@
     <string name="labelPause">Le jeu est en pause</string>
     <string name="buttonQuit">Quitter</string>
     <string name="buttonResume">Reprendre</string>
+    <string name="contentDescriptionIB">Pause button</string>
 </resources>
