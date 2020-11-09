@@ -10,6 +10,7 @@ import android.widget.TableLayout;
 import android.widget.TextView;
 
 import com.example.soukousschallenge.R;
+import com.example.soukousschallenge.model.Partie;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -25,11 +26,13 @@ public class MainActivity extends AppCompatActivity {
         mStartButton = findViewById(R.id.activity_main_startButton);
         mScoreButton = findViewById(R.id.activity_main_scoreButton);
 
+
         mStartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Lancement de la vue de jeu
                 System.out.println("Une nouvelle partie se lance !");
+
             }
         });
 
@@ -41,6 +44,9 @@ public class MainActivity extends AppCompatActivity {
                 startActivityForResult(scoreActivity,RC_SCORE);
             }
         });
+
+
+
 
 
     }

@@ -1,5 +1,7 @@
 package com.example.soukousschallenge.model;
 
+import android.util.Log;
+
 import java.util.*;
 
 public class Partie{
@@ -7,6 +9,27 @@ public class Partie{
     int duree;
     Score score;
     int tempsRestant;
+    TimerTask tache;
+
+    public Partie(){
+        chrono = new Timer();
+        duree = 10;
+        tempsRestant = duree;
+        tache = new TimerTask(){
+            @Override
+            public void run(){
+                if(tempsRestant>=0){
+                    Log.d("CHRONO","Temps restant : "+tempsRestant);
+                    if(tempsRestant==0){
+                        cancel();
+                    }
+                    tempsRestant--;
+                }
+
+            }
+        };
+
+    }
 
 
     // Getters & Setters
@@ -42,9 +65,40 @@ public class Partie{
         this.tempsRestant = tempsRestant;
     }
 
+    public TimerTask getTache(){ return tache;}
+
+    public void setTimerTask(TimerTask tache){this.tache = tache;}
+
     public void startChrono(TimerTask t){
         chrono.schedule(t,0,1000);
     }
 
+    public void startGame(){
+        startChrono(tache);
+    }
+
+    public void pauseGame(){
+        chrono.cancel();
+        Log.d("CHRONO","Pause !");
+    }
+
+    public void resumeGame(){
+        Log.d("CHRONO","Resume !");
+        chrono = new Timer();
+        tache = new TimerTask(){
+            @Override
+            public void run(){
+                if(tempsRestant>=0){
+                    Log.d("CHRONO","Temps restant : "+tempsRestant);
+                    if(tempsRestant==0){
+                        cancel();
+                    }
+                    tempsRestant--;
+                }
+            }
+        };
+        startChrono(tache);
+
+    }
 
 }
