@@ -17,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
     private Button mStartButton;
     private Button mScoreButton;
     public static final int RC_SCORE = 1;
+    public static final int RC_GAME = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,8 +32,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Lancement de la vue de jeu
-                System.out.println("Une nouvelle partie se lance !");
-
+                Intent gameActivity = new Intent(MainActivity.this, GameActivity.class);
+                startActivityForResult(gameActivity,RC_GAME);
             }
         });
 
