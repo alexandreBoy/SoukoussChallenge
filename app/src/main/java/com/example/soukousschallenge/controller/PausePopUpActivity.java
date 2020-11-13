@@ -34,7 +34,9 @@ public class PausePopUpActivity extends AppCompatActivity {
         mQuitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.exit(0);
+                Intent i = new Intent(PausePopUpActivity.this, MainActivity.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(i);
             }
         });
 
