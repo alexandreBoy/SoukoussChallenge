@@ -12,11 +12,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.TextView;
 
 import com.example.soukousschallenge.R;
 
-public class GameActivity extends AppCompatActivity implements SensorEventListener{
+
+public class GameActivity extends AppCompatActivity implements SensorEventListener {
 
     private ImageButton mPauseButton;
     public static final int PAUSE_POPUP = 1;
@@ -24,11 +24,19 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     private Sensor mGravitySensor;
     private boolean mFacingDown;
 
+    private float mAccel;
+    private float mAccelCurrent;
+    private float mAccelLast;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+
+        mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        mAccel = 10f;
+        mAccelCurrent = SensorManager.GRAVITY_EARTH;
+        mAccelLast = SensorManager.GRAVITY_EARTH;
 
         mPauseButton = findViewById(R.id.activity_game_pauseButton);
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
@@ -50,7 +58,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     }
 
     @Override
-    protected void onResume(){
+    protected void onResume() {
         super.onResume();
         if (mGravitySensor != null) {
             mSensorManager.registerListener(this, mGravitySensor, SensorManager.SENSOR_DELAY_NORMAL);
@@ -82,11 +90,23 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
             }
         }
         ################################################
+        ################# SHAKE ########################
+        float x = event.values[0];
+        float y = event.values[1];
+        float z = event.values[2];
+        mAccelLast = mAccelCurrent;
+        mAccelCurrent = (float) Math.sqrt((double) (x * x + y * y + z * z));
+        float delta = mAccelCurrent - mAccelLast;
+        mAccel = mAccel * 0.9f + delta;
+        if (mAccel > 12) {
+            Log.i("SHAKE", "Soukouss");
+        }
+        ################################################
         */
     }
 
     @Override
-    public void onAccuracyChanged(Sensor sensor, int i){
+    public void onAccuracyChanged(Sensor sensor, int i) {
 
     }
 }
