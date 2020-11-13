@@ -1,6 +1,7 @@
 package com.example.soukousschallenge.controller;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GestureDetectorCompat;
 
 import android.content.Context;
 import android.content.Intent;
@@ -34,6 +35,11 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     private float mAccelCurrent;
     private float mAccelLast;
 
+    private static final int SWIPE_MIN_DISTANCE = 120;
+    private static final int SWIPE_THRESHOLD_VELOCITY = 200;
+
+    private GestureDetectorCompat mDetector;
+
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -48,6 +54,9 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         mAccelerometerSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         mGravitySensor = mSensorManager.getDefaultSensor(Sensor.TYPE_GRAVITY);
+
+        mDetector = new GestureDetectorCompat(this, this);
+        mDetector.setOnDoubleTapListener(this);
 
         if (mGravitySensor == null){
             Log.w(TAG, "Device has no gravity sensor");
@@ -123,13 +132,24 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     }
 
     @Override
-    public boolean onSingleTapConfirmed(MotionEvent motionEvent){
-        return false;
+    public boolean onTouchEvent(MotionEvent event){
+        if (this.mDetector.onTouchEvent(event)) {
+            return true;
+        }
+        return super.onTouchEvent(event);
+    }
+
+
+    @Override
+    public boolean onSingleTapConfirmed(MotionEvent event){
+        Log.i(TAG,"Single Tap");
+        return true;
     }
 
     @Override
-    public boolean onDoubleTap(MotionEvent motionEvent){
-        return false;
+    public boolean onDoubleTap(MotionEvent event){
+        Log.i(TAG,"Double Tap");
+        return true;
     }
 
     @Override
@@ -158,12 +178,36 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     }
 
     @Override
-    public void onLongPress(MotionEvent motionEvent){
-
+    public void onLongPress(MotionEvent event){
+        Log.i(TAG,"Long press");
     }
 
     @Override
-    public boolean onFling(MotionEvent motionEvent, MotionEvent motionEvent1, float v, float v1){
-        return false;
+    public boolean onFling(MotionEvent event1, MotionEvent event2, float velocityX, float velocityY){
+        if(event1.getX() - event2.getX() > SWIPE_MIN_DISTANCE &&
+        Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY)
+        {
+            Log.i(TAG, "LEFT SWIPE");
+            return true;
+        }
+        else if(event2.getX() - event1.getX() > SWIPE_MIN_DISTANCE &&
+        Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY)
+        {
+            Log.i(TAG, "RIGHT SWIPE");
+            return true;
+        }
+        else if(event1.getY() - event2.getY() > SWIPE_MIN_DISTANCE &&
+        Math.abs(velocityY) > SWIPE_THRESHOLD_VELOCITY)
+        {
+            Log.i(TAG, "SWIPE UP");
+            return true;
+        }
+        else if(event2.getY() - event1.getY() > SWIPE_MIN_DISTANCE &&
+        Math.abs(velocityY) > SWIPE_THRESHOLD_VELOCITY)
+        {
+            Log.i(TAG, "SWIPE DOWN");
+            return true;
+        }
+        else return false;
     }
 }
