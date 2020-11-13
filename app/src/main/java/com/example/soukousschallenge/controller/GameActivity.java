@@ -4,19 +4,23 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.gesture.Gesture;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
 
 import com.example.soukousschallenge.R;
 
 
-public class GameActivity extends AppCompatActivity implements SensorEventListener {
+public class GameActivity extends AppCompatActivity implements SensorEventListener, GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener{
+
 
     private ImageButton mPauseButton;
     public static final int PAUSE_POPUP = 1;
@@ -31,7 +35,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     private float mAccelLast;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
@@ -45,8 +49,8 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         mAccelerometerSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         mGravitySensor = mSensorManager.getDefaultSensor(Sensor.TYPE_GRAVITY);
 
-        if(mGravitySensor == null){
-            Log.w(TAG,"Device has no gravity sensor");
+        if (mGravitySensor == null){
+            Log.w(TAG, "Device has no gravity sensor");
         }
 
         mPauseButton.setOnClickListener(new View.OnClickListener(){
@@ -65,8 +69,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
 
         // ################ DETECTION ######################
         // ################# SHAKE ########################
-        if (event.sensor == mAccelerometerSensor)
-        {
+        if (event.sensor == mAccelerometerSensor){
             float x = event.values[0];
             float y = event.values[1];
             float z = event.values[2];
@@ -74,7 +77,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
             mAccelCurrent = (float) Math.sqrt((double) (x * x + y * y + z * z));
             float delta = mAccelCurrent - mAccelLast;
             mAccel = mAccel * 0.9f + delta;
-            if (mAccel > 12) {
+            if (mAccel > 12){
                 Log.i(TAG, "Soukouss");
             }
         }
@@ -82,12 +85,12 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         // ################# TURN OVER #####################
         final float factor = 0.95F;
 
-        if (event.sensor == mGravitySensor) {
+        if (event.sensor == mGravitySensor){
             boolean nowDown = event.values[2] < -SensorManager.GRAVITY_EARTH * factor;
-            if (nowDown != mFacingDown) {
-                if (nowDown) {
+            if (nowDown != mFacingDown){
+                if (nowDown){
                     Log.i(TAG, "DOWN");
-                } else {
+                } else{
                     Log.i(TAG, "UP");
                 }
                 mFacingDown = nowDown;
@@ -98,14 +101,14 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     }
 
     @Override
-    public void onAccuracyChanged(Sensor sensor, int i) {
+    public void onAccuracyChanged(Sensor sensor, int i){
 
     }
 
     @Override
-    protected void onResume() {
+    protected void onResume(){
 
-        if (mGravitySensor != null) {
+        if (mGravitySensor != null){
             mSensorManager.registerListener(this, mGravitySensor, SensorManager.SENSOR_DELAY_NORMAL);
         }
 
@@ -117,5 +120,50 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     protected void onPause(){
         mSensorManager.unregisterListener(this);
         super.onPause();
+    }
+
+    @Override
+    public boolean onSingleTapConfirmed(MotionEvent motionEvent){
+        return false;
+    }
+
+    @Override
+    public boolean onDoubleTap(MotionEvent motionEvent){
+        return false;
+    }
+
+    @Override
+    public boolean onDoubleTapEvent(MotionEvent motionEvent){
+        return false;
+    }
+
+    @Override
+    public boolean onDown(MotionEvent motionEvent){
+        return false;
+    }
+
+    @Override
+    public void onShowPress(MotionEvent motionEvent){
+
+    }
+
+    @Override
+    public boolean onSingleTapUp(MotionEvent motionEvent){
+        return false;
+    }
+
+    @Override
+    public boolean onScroll(MotionEvent motionEvent, MotionEvent motionEvent1, float v, float v1){
+        return false;
+    }
+
+    @Override
+    public void onLongPress(MotionEvent motionEvent){
+
+    }
+
+    @Override
+    public boolean onFling(MotionEvent motionEvent, MotionEvent motionEvent1, float v, float v1){
+        return false;
     }
 }
