@@ -20,6 +20,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
 
     private ImageButton mPauseButton;
     public static final int PAUSE_POPUP = 1;
+    private static final String TAG = "DETECTION";
     private SensorManager mSensorManager;
     private Sensor mGravitySensor;
     private boolean mFacingDown;
@@ -43,7 +44,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         mGravitySensor = mSensorManager.getDefaultSensor(Sensor.TYPE_GRAVITY);
 
         if(mGravitySensor == null){
-            Log.w("TURN_OVER","Device has no gravity sensor");
+            Log.w(TAG,"Device has no gravity sensor");
         }
 
         mPauseButton.setOnClickListener(new View.OnClickListener(){
@@ -82,9 +83,9 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
             boolean nowDown = sensorEvent.values[2] < -SensorManager.GRAVITY_EARTH * factor;
             if (nowDown != mFacingDown) {
                 if (nowDown) {
-                    Log.i("TURN_OVER", "DOWN");
+                    Log.i(TAG, "DOWN");
                 } else {
-                    Log.i("TURN_OVER", "UP");
+                    Log.i(TAG, "UP");
                 }
                 mFacingDown = nowDown;
             }
@@ -99,7 +100,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         float delta = mAccelCurrent - mAccelLast;
         mAccel = mAccel * 0.9f + delta;
         if (mAccel > 12) {
-            Log.i("SHAKE", "Soukouss");
+            Log.i(TAG, "Soukouss");
         }
         ################################################
         */
