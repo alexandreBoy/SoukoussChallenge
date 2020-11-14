@@ -1,7 +1,7 @@
 package com.example.soukousschallenge.model;
 
-public class actionTopSwipe extends Action{
-    private final int ID = 4;
+public class ActionDoubleTap extends Action {
+    private final int ID = 7;
 
     @Override
     public boolean perform() {

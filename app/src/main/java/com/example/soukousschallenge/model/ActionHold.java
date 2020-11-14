@@ -1,6 +1,6 @@
 package com.example.soukousschallenge.model;
 
-public class actionHold extends Action {
+public class ActionHold extends Action {
     private final int ID = 8;
 
     @Override

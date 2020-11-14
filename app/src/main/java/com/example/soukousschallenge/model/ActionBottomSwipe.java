@@ -1,6 +1,6 @@
 package com.example.soukousschallenge.model;
 
-public class actionBottomSwipe extends Action {
+public class ActionBottomSwipe extends Action {
     private final int ID = 5;
 
     @Override
