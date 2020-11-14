@@ -6,6 +6,11 @@ public class Score{
     Date date;
     int valeurScore;
 
+    public Score(){
+        date = new Date(System.currentTimeMillis());
+        this.valeurScore = 0;
+    }
+
     // Getters & Setters
     public Date getDate(){
         return date;

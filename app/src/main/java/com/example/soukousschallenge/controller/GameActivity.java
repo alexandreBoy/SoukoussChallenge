@@ -16,14 +16,19 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.example.soukousschallenge.R;
+import com.example.soukousschallenge.model.Partie;
+
+import java.util.TimerTask;
 
 
 public class GameActivity extends AppCompatActivity implements SensorEventListener, GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener{
 
 
     private ImageButton mPauseButton;
+    private TextView mLabelTimer;
     public static final int PAUSE_POPUP = 1;
     private static final String TAG = "DETECTION";
     private SensorManager mSensorManager;
@@ -40,23 +45,32 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
 
     private GestureDetectorCompat mDetector;
 
+    private Partie partie;
+
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
+        mPauseButton = findViewById(R.id.activity_game_pauseButton);
+        mLabelTimer = findViewById(R.id.activity_game_labelTimer);
+
+        partie = new Partie(mLabelTimer);
+
+
+
+
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        mAccelerometerSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        mGravitySensor = mSensorManager.getDefaultSensor(Sensor.TYPE_GRAVITY);
         mAccel = 10f;
         mAccelCurrent = SensorManager.GRAVITY_EARTH;
         mAccelLast = SensorManager.GRAVITY_EARTH;
 
-        mPauseButton = findViewById(R.id.activity_game_pauseButton);
-        mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-        mAccelerometerSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        mGravitySensor = mSensorManager.getDefaultSensor(Sensor.TYPE_GRAVITY);
-
         mDetector = new GestureDetectorCompat(this, this);
         mDetector.setOnDoubleTapListener(this);
+
+        partie.startChrono();
 
         if (mGravitySensor == null){
             Log.w(TAG, "Device has no gravity sensor");
@@ -65,11 +79,11 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         mPauseButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
+                partie.pauseChrono();
                 Intent pausePopUpActivity = new Intent(GameActivity.this, PausePopUpActivity.class);
                 startActivityForResult(pausePopUpActivity, PAUSE_POPUP);
             }
         });
-
 
     }
 
@@ -117,6 +131,8 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     @Override
     protected void onResume(){
 
+        partie.startChrono();
+
         if (mGravitySensor != null){
             mSensorManager.registerListener(this, mGravitySensor, SensorManager.SENSOR_DELAY_NORMAL);
         }
@@ -127,6 +143,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
 
     @Override
     protected void onPause(){
+        partie.pauseChrono();
         mSensorManager.unregisterListener(this);
         super.onPause();
     }

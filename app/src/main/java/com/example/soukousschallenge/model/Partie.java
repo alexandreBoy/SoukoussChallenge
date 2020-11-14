@@ -1,43 +1,39 @@
 package com.example.soukousschallenge.model;
 
+import android.os.CountDownTimer;
 import android.util.Log;
+import android.widget.TextView;
 
 import java.util.*;
 
 public class Partie{
-    Timer chrono;
+    CountDownTimer chrono;
     int duree;
     Score score;
-    int tempsRestant;
-    TimerTask tache;
+    long tempsRestant;
+    boolean isChronoRunning;
+    TextView affichageChrono;
+    boolean isFinished;
 
-    public Partie(){
-        chrono = new Timer();
-        duree = 10;
+
+    public Partie(TextView t){
+        duree = 60000;
         tempsRestant = duree;
-        tache = new TimerTask(){
-            @Override
-            public void run(){
-                if(tempsRestant>=0){
-                    Log.d("CHRONO","Temps restant : "+tempsRestant);
-                    if(tempsRestant==0){
-                        cancel();
-                    }
-                    tempsRestant--;
-                }
+        score = new Score();
+        affichageChrono = t;
 
-            }
-        };
 
     }
 
 
     // Getters & Setters
-    public Timer getChrono(){
+
+
+    public CountDownTimer getChrono(){
         return chrono;
     }
 
-    public void setChrono(Timer chrono){
+    public void setChrono(CountDownTimer chrono){
         this.chrono = chrono;
     }
 
@@ -57,48 +53,75 @@ public class Partie{
         this.score = score;
     }
 
-    public int getTempsRestant(){
+    public long getTempsRestant(){
         return tempsRestant;
     }
 
-    public void setTempsRestant(int tempsRestant){
+    public void setTempsRestant(long tempsRestant){
         this.tempsRestant = tempsRestant;
     }
 
-    public TimerTask getTache(){ return tache;}
-
-    public void setTimerTask(TimerTask tache){this.tache = tache;}
-
-    public void startChrono(TimerTask t){
-        chrono.schedule(t,0,1000);
+    public boolean isChronoRunning(){
+        return isChronoRunning;
     }
 
-    public void startGame(){
-        startChrono(tache);
+    public void setChronoRunning(boolean chronoRunning){
+        isChronoRunning = chronoRunning;
     }
 
-    public void pauseGame(){
-        chrono.cancel();
-        Log.d("CHRONO","Pause !");
+    public TextView getAffichageChrono(){
+        return affichageChrono;
     }
 
-    public void resumeGame(){
-        Log.d("CHRONO","Resume !");
-        chrono = new Timer();
-        tache = new TimerTask(){
+    public void setAffichageChrono(TextView affichageChrono){
+        this.affichageChrono = affichageChrono;
+    }
+
+    public boolean isFinished(){
+        return isFinished;
+    }
+
+    public void setFinished(boolean finished){
+        isFinished = finished;
+    }
+
+
+
+    public void startChrono(){
+        chrono = new CountDownTimer(tempsRestant,1000){
             @Override
-            public void run(){
-                if(tempsRestant>=0){
-                    Log.d("CHRONO","Temps restant : "+tempsRestant);
-                    if(tempsRestant==0){
-                        cancel();
-                    }
-                    tempsRestant--;
-                }
+            public void onTick(long l){
+                tempsRestant = l;
+                updateChronoText();
+
             }
-        };
-        startChrono(tache);
+
+            @Override
+            public void onFinish(){
+                isChronoRunning = false;
+                isFinished = true;
+
+            }
+        }.start();
+
+        isChronoRunning = true;
+        isFinished = false;
 
     }
+
+    public void pauseChrono(){
+        chrono.cancel();
+        isChronoRunning = false;
+    }
+
+    public void updateChronoText(){
+        int secondes = (int) (tempsRestant/1000)%60;
+        String timeLeft = String.format("00:%02d",secondes);
+
+        affichageChrono.setText(timeLeft);
+
+    }
+
+
 
 }
