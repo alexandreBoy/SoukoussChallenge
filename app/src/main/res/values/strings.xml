@@ -10,4 +10,13 @@
     <string name="buttonQuit">Quitter</string>
     <string name="buttonResume">Reprendre</string>
     <string name="contentDescriptionIB">Pause button</string>
+    <string name="actionShake">Secouez votre téléphone !</string>
+    <string name="actionTurnOver">Retournez votre téléphone !</string>
+    <string name="actionSwipeLeft">Faites un swipe vers la gauche !</string>
+    <string name="actionSwipeRight">Faites un swipe vers la droite !</string>
+    <string name="actionSwipeTop">Faites un swipe vers le haut !</string>
+    <string name="actionSwipeBottom">Faites un swipe vers le bas !</string>
+    <string name="actionSingleTap">Touchez une seule fois l\'écran !</string>
+    <string name="actionDoubleTap">Touchez deux fois l\'écran !</string>
+    <string name="actionHold">Appuyez sur l\'écran !</string>
 </resources>
