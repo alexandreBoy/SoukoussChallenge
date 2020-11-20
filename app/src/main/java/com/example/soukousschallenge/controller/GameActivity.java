@@ -5,7 +5,6 @@ import androidx.core.view.GestureDetectorCompat;
 
 import android.content.Context;
 import android.content.Intent;
-import android.gesture.Gesture;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -32,7 +31,6 @@ import com.example.soukousschallenge.model.ActionRightSwipe;
 import com.example.soukousschallenge.model.ActionShake;
 import com.example.soukousschallenge.model.ActionTopSwipe;
 import com.example.soukousschallenge.model.ActionTurnDown;
-import com.example.soukousschallenge.model.ActionTurnUp;
 import com.example.soukousschallenge.model.Partie;
 
 import java.util.ArrayList;
@@ -142,12 +140,6 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
                     Log.i(TAG, "DOWN");
                     incrementScore((String) mScoreNumber.getText());
                     pickAction();
-                } else{
-                    if(actionSelected == 9 && !partie.isFinished()){
-                        Log.i(TAG, "UP");
-                        incrementScore((String) mScoreNumber.getText());
-                        pickAction();
-                    }
                 }
                 mFacingDown = nowDown;
             }
@@ -275,7 +267,6 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         {
             Log.i(TAG, "SWIPE DOWN");
             incrementScore((String) mScoreNumber.getText());
-            vibrate();
             pickAction();
 
             return true;
@@ -310,7 +301,6 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         liste_actions.add(new ActionOneTap()); // Action dont l'ID = 6
         liste_actions.add(new ActionDoubleTap()); // Action dont l'ID = 7
         liste_actions.add(new ActionHold()); // Action dont l'ID = 8
-        liste_actions.add(new ActionTurnUp()); // Action dont l'ID = 9
     }
 
     public void pickAction(){
