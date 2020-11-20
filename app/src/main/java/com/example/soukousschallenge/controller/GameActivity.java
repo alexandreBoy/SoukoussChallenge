@@ -35,7 +35,8 @@ import com.example.soukousschallenge.model.ActionTurnDown;
 import com.example.soukousschallenge.model.ActionTurnUp;
 import com.example.soukousschallenge.model.Partie;
 
-import java.util.TimerTask;
+import java.util.ArrayList;
+import java.util.Random;
 
 
 public class GameActivity extends AppCompatActivity implements SensorEventListener, GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener{
@@ -62,6 +63,10 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
 
     private Partie partie;
 
+    private ArrayList<Action> liste_actions;
+    private int actionSelected;
+    private int previousAction = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -73,8 +78,8 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
 
         partie = new Partie(mLabelTimer);
 
-
-
+        liste_actions = new ArrayList<>(); // On crée la liste des différentes actions
+        initListe(); // On initialise la liste
 
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         mAccelerometerSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
@@ -87,6 +92,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         mDetector.setOnDoubleTapListener(this);
 
         partie.startChrono();
+        pickAction();
 
         if (mGravitySensor == null){
             Log.w(TAG, "Device has no gravity sensor");
@@ -116,10 +122,11 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
             mAccelCurrent = (float) Math.sqrt((double) (x * x + y * y + z * z));
             float delta = mAccelCurrent - mAccelLast;
             mAccel = mAccel * 0.9f + delta;
-            if (mAccel > 12){
+            if (mAccel > 12 && actionSelected == 0){
                 Log.i(TAG, "Soukouss");
                 ActionShake actionShake = new ActionShake();
                 incrementScore((String) mScoreNumber.getText());
+                pickAction();
             }
         }
         // ################################################
@@ -129,13 +136,18 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         if (event.sensor == mGravitySensor){
             boolean nowDown = event.values[2] < -SensorManager.GRAVITY_EARTH * factor;
             if (nowDown != mFacingDown){
-                if (nowDown){
+                if (nowDown && actionSelected == 1){
                     Log.i(TAG, "DOWN");
                     ActionTurnDown actionTurnDown = new ActionTurnDown();
                     incrementScore((String) mScoreNumber.getText());
+                    pickAction();
                 } else{
-                    Log.i(TAG, "UP");
-                    ActionTurnUp actionTurnUp = new ActionTurnUp();
+                    if(actionSelected == 9){
+                        Log.i(TAG, "UP");
+                        ActionTurnUp actionTurnUp = new ActionTurnUp();
+                        incrementScore((String) mScoreNumber.getText());
+                        pickAction();
+                    }
                 }
                 mFacingDown = nowDown;
             }
@@ -180,17 +192,21 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
 
     @Override
     public boolean onSingleTapConfirmed(MotionEvent event){
-        Log.i(TAG,"Single Tap");
-        ActionOneTap actionOneTap = new ActionOneTap();
-        incrementScore((String) mScoreNumber.getText());
+        if(actionSelected == 6){
+            Log.i(TAG,"Single Tap");
+            incrementScore((String) mScoreNumber.getText());
+            pickAction();
+        }
         return true;
     }
 
     @Override
     public boolean onDoubleTap(MotionEvent event){
-        Log.i(TAG,"Double Tap");
-        ActionDoubleTap actionDoubleTap = new ActionDoubleTap();
-        incrementScore((String) mScoreNumber.getText());
+        if(actionSelected == 7){
+            Log.i(TAG,"Double Tap");
+            incrementScore((String) mScoreNumber.getText());
+            pickAction();
+        }
         return true;
     }
 
@@ -221,44 +237,47 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
 
     @Override
     public void onLongPress(MotionEvent event){
-        Log.i(TAG,"Long press");
-        ActionHold actionHold = new ActionHold();
-        incrementScore((String) mScoreNumber.getText());
+        if(actionSelected == 8){
+            Log.i(TAG,"Long press");
+            incrementScore((String) mScoreNumber.getText());
+            pickAction();
+        }
     }
 
     @Override
     public boolean onFling(MotionEvent event1, MotionEvent event2, float velocityX, float velocityY){
         if(event1.getX() - event2.getX() > SWIPE_MIN_DISTANCE &&
-        Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY)
+        Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY && actionSelected == 2)
         {
             Log.i(TAG, "LEFT SWIPE");
-            ActionLeftSwipe actionLeftSwipe = new ActionLeftSwipe();
             incrementScore((String) mScoreNumber.getText());
+            pickAction();
             return true;
         }
         else if(event2.getX() - event1.getX() > SWIPE_MIN_DISTANCE &&
-        Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY)
+        Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY && actionSelected == 3)
         {
             Log.i(TAG, "RIGHT SWIPE");
-            ActionRightSwipe actionRightSwipe = new ActionRightSwipe();
             incrementScore((String) mScoreNumber.getText());
+            pickAction();
             return true;
         }
         else if(event1.getY() - event2.getY() > SWIPE_MIN_DISTANCE &&
-        Math.abs(velocityY) > SWIPE_THRESHOLD_VELOCITY)
+        Math.abs(velocityY) > SWIPE_THRESHOLD_VELOCITY && actionSelected == 4)
         {
             Log.i(TAG, "SWIPE UP");
-            ActionTopSwipe actionTopSwipe = new ActionTopSwipe();
             incrementScore((String) mScoreNumber.getText());
+            pickAction();
             return true;
         }
         else if(event2.getY() - event1.getY() > SWIPE_MIN_DISTANCE &&
-        Math.abs(velocityY) > SWIPE_THRESHOLD_VELOCITY)
+        Math.abs(velocityY) > SWIPE_THRESHOLD_VELOCITY && actionSelected == 5)
         {
             Log.i(TAG, "SWIPE DOWN");
-            ActionBottomSwipe actionBottomSwipe = new ActionBottomSwipe();
             incrementScore((String) mScoreNumber.getText());
             vibrate();
+            pickAction();
+
             return true;
         }
         else return false;
@@ -279,5 +298,28 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         int newIntScore = oldIntScore + 1;
         String newScore = Integer.toString(newIntScore);
         mScoreNumber.setText(newScore);
+    }
+
+    public void initListe(){
+        liste_actions.add(new ActionShake()); // Action dont l'ID = 0
+        liste_actions.add(new ActionTurnDown()); // Action dont l'ID = 1
+        liste_actions.add(new ActionLeftSwipe()); // Action dont l'ID = 2
+        liste_actions.add(new ActionRightSwipe()); // Action dont l'ID = 3
+        liste_actions.add(new ActionTopSwipe()); // Action dont l'ID = 4
+        liste_actions.add(new ActionBottomSwipe()); // Action dont l'ID = 5
+        liste_actions.add(new ActionOneTap()); // Action dont l'ID = 6
+        liste_actions.add(new ActionDoubleTap()); // Action dont l'ID = 7
+        liste_actions.add(new ActionHold()); // Action dont l'ID = 8
+        liste_actions.add(new ActionTurnUp()); // Action dont l'ID = 9
+    }
+
+    public void pickAction(){
+        if(partie.getTempsRestant() >0){
+            previousAction = actionSelected;
+            do{
+                Random rand = new Random();
+                actionSelected = rand.nextInt(liste_actions.size());
+            }while(actionSelected == previousAction);
+        }
     }
 }
