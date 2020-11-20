@@ -19,6 +19,17 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.soukousschallenge.R;
+import com.example.soukousschallenge.model.Action;
+import com.example.soukousschallenge.model.ActionBottomSwipe;
+import com.example.soukousschallenge.model.ActionDoubleTap;
+import com.example.soukousschallenge.model.ActionHold;
+import com.example.soukousschallenge.model.ActionLeftSwipe;
+import com.example.soukousschallenge.model.ActionOneTap;
+import com.example.soukousschallenge.model.ActionRightSwipe;
+import com.example.soukousschallenge.model.ActionShake;
+import com.example.soukousschallenge.model.ActionTopSwipe;
+import com.example.soukousschallenge.model.ActionTurnDown;
+import com.example.soukousschallenge.model.ActionTurnUp;
 import com.example.soukousschallenge.model.Partie;
 
 import java.util.TimerTask;
@@ -29,6 +40,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
 
     private ImageButton mPauseButton;
     private TextView mLabelTimer;
+    private TextView mScoreNumber;
     public static final int PAUSE_POPUP = 1;
     private static final String TAG = "DETECTION";
     private SensorManager mSensorManager;
@@ -54,6 +66,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
 
         mPauseButton = findViewById(R.id.activity_game_pauseButton);
         mLabelTimer = findViewById(R.id.activity_game_labelTimer);
+        mScoreNumber = findViewById(R.id.activity_game_scoreNumber);
 
         partie = new Partie(mLabelTimer);
 
@@ -102,6 +115,8 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
             mAccel = mAccel * 0.9f + delta;
             if (mAccel > 12){
                 Log.i(TAG, "Soukouss");
+                ActionShake actionShake = new ActionShake();
+                incrementScore((String) mScoreNumber.getText());
             }
         }
         // ################################################
@@ -113,8 +128,11 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
             if (nowDown != mFacingDown){
                 if (nowDown){
                     Log.i(TAG, "DOWN");
+                    ActionTurnDown actionTurnDown = new ActionTurnDown();
+                    incrementScore((String) mScoreNumber.getText());
                 } else{
                     Log.i(TAG, "UP");
+                    ActionTurnUp actionTurnUp = new ActionTurnUp();
                 }
                 mFacingDown = nowDown;
             }
@@ -160,12 +178,16 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     @Override
     public boolean onSingleTapConfirmed(MotionEvent event){
         Log.i(TAG,"Single Tap");
+        ActionOneTap actionOneTap = new ActionOneTap();
+        incrementScore((String) mScoreNumber.getText());
         return true;
     }
 
     @Override
     public boolean onDoubleTap(MotionEvent event){
         Log.i(TAG,"Double Tap");
+        ActionDoubleTap actionDoubleTap = new ActionDoubleTap();
+        incrementScore((String) mScoreNumber.getText());
         return true;
     }
 
@@ -197,6 +219,8 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     @Override
     public void onLongPress(MotionEvent event){
         Log.i(TAG,"Long press");
+        ActionHold actionHold = new ActionHold();
+        incrementScore((String) mScoreNumber.getText());
     }
 
     @Override
@@ -205,26 +229,42 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY)
         {
             Log.i(TAG, "LEFT SWIPE");
+            ActionLeftSwipe actionLeftSwipe = new ActionLeftSwipe();
+            incrementScore((String) mScoreNumber.getText());
             return true;
         }
         else if(event2.getX() - event1.getX() > SWIPE_MIN_DISTANCE &&
         Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY)
         {
             Log.i(TAG, "RIGHT SWIPE");
+            ActionRightSwipe actionRightSwipe = new ActionRightSwipe();
+            incrementScore((String) mScoreNumber.getText());
             return true;
         }
         else if(event1.getY() - event2.getY() > SWIPE_MIN_DISTANCE &&
         Math.abs(velocityY) > SWIPE_THRESHOLD_VELOCITY)
         {
             Log.i(TAG, "SWIPE UP");
+            ActionTopSwipe actionTopSwipe = new ActionTopSwipe();
+            incrementScore((String) mScoreNumber.getText());
             return true;
         }
         else if(event2.getY() - event1.getY() > SWIPE_MIN_DISTANCE &&
         Math.abs(velocityY) > SWIPE_THRESHOLD_VELOCITY)
         {
             Log.i(TAG, "SWIPE DOWN");
+            ActionBottomSwipe actionBottomSwipe = new ActionBottomSwipe();
+            incrementScore((String) mScoreNumber.getText());
             return true;
         }
         else return false;
+    }
+
+    public void incrementScore(String oldScore)
+    {
+        int oldIntScore = Integer.parseInt(oldScore);
+        int newIntScore = oldIntScore + 1;
+        String newScore = Integer.toString(newIntScore);
+        mScoreNumber.setText(newScore);
     }
 }

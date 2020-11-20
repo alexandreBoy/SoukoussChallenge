@@ -60,6 +60,20 @@
         app:layout_constraintTop_toBottomOf="@+id/activityGame_guideline2"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
+    <TextView
+        android:id="@+id/activity_game_scoreNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20sp"
+        android:text="@string/scoreNumber"
+        android:textSize="32sp"
+        android:textAlignment="center"
+        android:gravity="center_horizontal"
+        app:layout_constraintLeft_toRightOf="@id/activity_game_labelScore"
+        app:layout_constraintRight_toLeftOf="@id/activityGame_guideline3"
+        app:layout_constraintTop_toBottomOf="@id/activityGame_guideline2"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/activityGame_guideline3"
         android:layout_width="wrap_content"

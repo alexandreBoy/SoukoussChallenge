@@ -5,7 +5,8 @@
     <string name="scoreButton">Scores</string>
     <string name="labelTimer">00:00</string>
     <string name="labelAction">Action à réaliser</string>
-    <string name="labelScore">Score : 0</string>
+    <string name="labelScore">Score : </string>
+    <string name="scoreNumber">0</string>
     <string name="labelPause">Le jeu est en pause</string>
     <string name="buttonQuit">Quitter</string>
     <string name="buttonResume">Reprendre</string>

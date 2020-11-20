@@ -1,6 +1,6 @@
 package com.example.soukousschallenge.model;
 
-public class ActionTurnOver extends Action {
+public class ActionTurnDown extends Action {
     private final int ID = 1;
 
     @Override
