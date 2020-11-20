@@ -10,7 +10,10 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -255,9 +258,19 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
             Log.i(TAG, "SWIPE DOWN");
             ActionBottomSwipe actionBottomSwipe = new ActionBottomSwipe();
             incrementScore((String) mScoreNumber.getText());
+            vibrate();
             return true;
         }
         else return false;
+    }
+
+    public void vibrate()
+    {
+        if (Build.VERSION.SDK_INT >= 26) {
+            ((Vibrator) getSystemService(VIBRATOR_SERVICE)).vibrate(VibrationEffect.createOneShot(150, VibrationEffect.DEFAULT_AMPLITUDE));
+        } else {
+            ((Vibrator) getSystemService(VIBRATOR_SERVICE)).vibrate(150);
+        }
     }
 
     public void incrementScore(String oldScore)
