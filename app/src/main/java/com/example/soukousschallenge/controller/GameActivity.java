@@ -44,7 +44,8 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     private TextView mLabelTimer;
     private TextView mScoreNumber;
     private TextView mLabelAction;
-    public static final int PAUSE_POPUP = 1;
+    public static final int PAUSE_POPUP = 2;
+    public static final int ENDGAME_POPUP = 3;
     private static final String TAG = "DETECTION";
     private SensorManager mSensorManager;
     private Sensor mAccelerometerSensor;
@@ -103,6 +104,12 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
                 startActivityForResult(pausePopUpActivity, PAUSE_POPUP);
             }
         });
+
+        while(partie.isFinished())
+        {
+            Intent endGamePopUpActivity = new Intent(GameActivity.this, EndGamePopUpActivity.class);
+            startActivityForResult(endGamePopUpActivity, ENDGAME_POPUP);
+        }
 
     }
 

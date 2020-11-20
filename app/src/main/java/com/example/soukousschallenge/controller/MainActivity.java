@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Button mStartButton;
     private Button mScoreButton;
-    public static final int RC_SCORE = 1;
+    public static final int RC_SCORE = 4;
     public static final int RC_GAME = 1;
 
     @Override
