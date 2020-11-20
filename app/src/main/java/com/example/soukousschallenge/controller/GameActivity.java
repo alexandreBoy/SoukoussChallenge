@@ -65,6 +65,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     private ArrayList<Action> liste_actions;
     private int actionSelected;
     private int previousAction = 0;
+    private int error = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -94,10 +95,6 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         partie.startChrono();
         pickAction();
 
-        if (mGravitySensor == null){
-            Log.w(TAG, "Device has no gravity sensor");
-        }
-
         mPauseButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
@@ -122,11 +119,15 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
             mAccelCurrent = (float) Math.sqrt((double) (x * x + y * y + z * z));
             float delta = mAccelCurrent - mAccelLast;
             mAccel = mAccel * 0.9f + delta;
-            if (mAccel > 12 && actionSelected == 0 && !partie.isFinished()){
-                Log.i(TAG, "Soukouss");
-                ActionShake actionShake = new ActionShake();
-                incrementScore((String) mScoreNumber.getText());
-                pickAction();
+            if (mAccel > 12 && !partie.isFinished()){
+                if(actionSelected == 0 ){
+                    incrementScore((String) mScoreNumber.getText());
+                    vibrate();
+                    pickAction();
+                }else{
+                    vibrate();
+                    mLabelAction.setText(mLabelAction.getText()+"\n"+getString(R.string.actionError));
+                }
             }
         }
         // ################################################
@@ -136,10 +137,21 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         if (event.sensor == mGravitySensor){
             boolean nowDown = event.values[2] < -SensorManager.GRAVITY_EARTH * factor;
             if (nowDown != mFacingDown){
-                if (nowDown && actionSelected == 1 && !partie.isFinished()){
-                    Log.i(TAG, "DOWN");
-                    incrementScore((String) mScoreNumber.getText());
-                    pickAction();
+                if (nowDown && !partie.isFinished()){
+                    if (actionSelected == 1){
+                        incrementScore((String) mScoreNumber.getText());
+                        error = 0;
+                        pickAction();
+                    }else{
+                        error++;
+                        if(error<=1){
+                            vibrate();
+                            mLabelAction.setText(mLabelAction.getText()+"\n"+getString(R.string.actionError));
+                        }else{
+                            vibrate();
+                        }
+                    }
+
                 }
                 mFacingDown = nowDown;
             }
@@ -184,20 +196,42 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
 
     @Override
     public boolean onSingleTapConfirmed(MotionEvent event){
-        if(actionSelected == 6 && !partie.isFinished()){
-            Log.i(TAG,"Single Tap");
-            incrementScore((String) mScoreNumber.getText());
-            pickAction();
+        if( !partie.isFinished()){
+            if(actionSelected == 6){
+                incrementScore((String) mScoreNumber.getText());
+                error = 0;
+                pickAction();
+            }else{
+                error++;
+                if(error<=1){
+                    vibrate();
+                    mLabelAction.setText(mLabelAction.getText()+"\n"+getString(R.string.actionError));
+                }else{
+                    vibrate();
+                }
+            }
+
         }
         return true;
     }
 
     @Override
     public boolean onDoubleTap(MotionEvent event){
-        if(actionSelected == 7 && !partie.isFinished()){
-            Log.i(TAG,"Double Tap");
-            incrementScore((String) mScoreNumber.getText());
-            pickAction();
+        if( !partie.isFinished()){
+            if(actionSelected == 7){
+                incrementScore((String) mScoreNumber.getText());
+                error = 0;
+                pickAction();
+            }else{
+                error++;
+                if(error<=1){
+                    vibrate();
+                    mLabelAction.setText(mLabelAction.getText()+"\n"+getString(R.string.actionError));
+                }else{
+                    vibrate();
+                }
+            }
+
         }
         return true;
     }
@@ -229,46 +263,97 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
 
     @Override
     public void onLongPress(MotionEvent event){
-        if(actionSelected == 8 && !partie.isFinished()){
-            Log.i(TAG,"Long press");
-            incrementScore((String) mScoreNumber.getText());
-            pickAction();
+        if( !partie.isFinished()){
+            if(actionSelected == 8){
+                incrementScore((String) mScoreNumber.getText());
+                error = 0;
+                pickAction();
+            }else{
+                error++;
+                if(error<=1){
+                    vibrate();
+                    mLabelAction.setText(mLabelAction.getText()+"\n"+getString(R.string.actionError));
+                }else{
+                    vibrate();
+                }
+            }
+
         }
     }
 
     @Override
     public boolean onFling(MotionEvent event1, MotionEvent event2, float velocityX, float velocityY){
         if(event1.getX() - event2.getX() > SWIPE_MIN_DISTANCE &&
-        Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY && actionSelected == 2 &&!partie.isFinished())
+        Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY && !partie.isFinished())
         {
-            Log.i(TAG, "LEFT SWIPE");
-            incrementScore((String) mScoreNumber.getText());
-            pickAction();
+            if(actionSelected == 2){
+                incrementScore((String) mScoreNumber.getText());
+                error = 0;
+                pickAction();
+            }else{
+                error++;
+                if(error<=1){
+                    vibrate();
+                    mLabelAction.setText(mLabelAction.getText()+"\n"+getString(R.string.actionError));
+                }else{
+                    vibrate();
+                }
+            }
+
             return true;
         }
         else if(event2.getX() - event1.getX() > SWIPE_MIN_DISTANCE &&
-        Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY && actionSelected == 3 && !partie.isFinished())
+        Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY  && !partie.isFinished())
         {
-            Log.i(TAG, "RIGHT SWIPE");
-            incrementScore((String) mScoreNumber.getText());
-            pickAction();
+            if(actionSelected == 3){
+                incrementScore((String) mScoreNumber.getText());
+                error = 0;
+                pickAction();
+            }else{
+                error++;
+                if(error<=1){
+                    vibrate();
+                    mLabelAction.setText(mLabelAction.getText()+"\n"+getString(R.string.actionError));
+                }else{
+                    vibrate();
+                }
+            }
             return true;
         }
         else if(event1.getY() - event2.getY() > SWIPE_MIN_DISTANCE &&
-        Math.abs(velocityY) > SWIPE_THRESHOLD_VELOCITY && actionSelected == 4 && !partie.isFinished())
+        Math.abs(velocityY) > SWIPE_THRESHOLD_VELOCITY && !partie.isFinished())
         {
-            Log.i(TAG, "SWIPE UP");
-            incrementScore((String) mScoreNumber.getText());
-            pickAction();
+            if(actionSelected == 4){
+                incrementScore((String) mScoreNumber.getText());
+                error = 0;
+                pickAction();
+            }else{
+                error++;
+                if(error<=1){
+                    vibrate();
+                    mLabelAction.setText(mLabelAction.getText()+"\n"+getString(R.string.actionError));
+                }else{
+                    vibrate();
+                }
+            }
             return true;
         }
         else if(event2.getY() - event1.getY() > SWIPE_MIN_DISTANCE &&
-        Math.abs(velocityY) > SWIPE_THRESHOLD_VELOCITY && actionSelected == 5 && !partie.isFinished())
+        Math.abs(velocityY) > SWIPE_THRESHOLD_VELOCITY && !partie.isFinished())
         {
-            Log.i(TAG, "SWIPE DOWN");
-            incrementScore((String) mScoreNumber.getText());
-            pickAction();
-
+            if(actionSelected == 5){
+                incrementScore((String) mScoreNumber.getText());
+                error = 0;
+                pickAction();
+            }else{
+                error++;
+                if(error<=1){
+                    vibrate();
+                    mLabelAction.setText(mLabelAction.getText()+"\n"+getString(R.string.actionError));
+                }else{
+                    vibrate();
+                }
+            }
             return true;
         }
         else return false;

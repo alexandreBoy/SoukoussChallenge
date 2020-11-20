@@ -19,5 +19,6 @@
     <string name="actionSwipeBottom">Faites un swipe vers le bas !</string>
     <string name="actionSingleTap">Touchez une seule fois l\'écran !</string>
     <string name="actionDoubleTap">Touchez deux fois l\'écran !</string>
-    <string name="actionHold">Appuyez sur l\'écran !</string>
+    <string name="actionHold">Maintenez votre doigt sur l\'écran !</string>
+    <string name="actionError">Réessayez !</string>
 </resources>
