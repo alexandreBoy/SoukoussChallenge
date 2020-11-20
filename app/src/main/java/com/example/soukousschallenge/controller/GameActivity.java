@@ -96,6 +96,14 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         partie.startChrono();
         pickAction();
 
+
+        partie.setCl( new Partie.CustomListener(){
+            @Override
+            public void onChange(){
+                Intent endGamePopUpActivity = new Intent(GameActivity.this, EndGamePopUpActivity.class);
+                startActivityForResult(endGamePopUpActivity, ENDGAME_POPUP);
+            }
+        });
         mPauseButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
@@ -104,12 +112,6 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
                 startActivityForResult(pausePopUpActivity, PAUSE_POPUP);
             }
         });
-
-        while(partie.isFinished())
-        {
-            Intent endGamePopUpActivity = new Intent(GameActivity.this, EndGamePopUpActivity.class);
-            startActivityForResult(endGamePopUpActivity, ENDGAME_POPUP);
-        }
 
     }
 

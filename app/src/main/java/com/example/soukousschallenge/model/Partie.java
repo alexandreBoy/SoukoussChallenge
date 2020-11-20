@@ -14,10 +14,11 @@ public class Partie{
     boolean isChronoRunning;
     TextView affichageChrono;
     boolean isFinished;
+    CustomListener cl;
 
 
     public Partie(TextView t){
-        duree = 60000;
+        duree = 6000;
         tempsRestant = duree;
         score = new Score();
         affichageChrono = t;
@@ -77,12 +78,18 @@ public class Partie{
         this.affichageChrono = affichageChrono;
     }
 
+    public void setCl(CustomListener cl){
+        this.cl = cl;
+
+    }
+
     public boolean isFinished(){
         return isFinished;
     }
 
     public void setFinished(boolean finished){
         isFinished = finished;
+        if( finished && cl != null) cl.onChange();
     }
 
 
@@ -99,13 +106,13 @@ public class Partie{
             @Override
             public void onFinish(){
                 isChronoRunning = false;
-                isFinished = true;
+                setFinished(true);
 
             }
         }.start();
 
         isChronoRunning = true;
-        isFinished = false;
+        setFinished(false);
 
     }
 
@@ -120,6 +127,10 @@ public class Partie{
 
         affichageChrono.setText(timeLeft);
 
+    }
+
+    public interface CustomListener{
+        void onChange();
     }
 
 
