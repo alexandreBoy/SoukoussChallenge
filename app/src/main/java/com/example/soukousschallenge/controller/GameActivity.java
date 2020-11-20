@@ -322,7 +322,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
                 Random rand = new Random();
                 actionSelected = rand.nextInt(liste_actions.size());
             }while(actionSelected == previousAction);
-            mLabelAction.setText(liste_actions.get(actionSelected).toString());
+            mLabelAction.setText(liste_actions.get(actionSelected).getActionText(this.getApplicationContext()));
         }
     }
 }
