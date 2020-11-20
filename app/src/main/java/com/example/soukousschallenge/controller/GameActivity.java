@@ -45,6 +45,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     private ImageButton mPauseButton;
     private TextView mLabelTimer;
     private TextView mScoreNumber;
+    private TextView mLabelAction;
     public static final int PAUSE_POPUP = 1;
     private static final String TAG = "DETECTION";
     private SensorManager mSensorManager;
@@ -75,6 +76,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         mPauseButton = findViewById(R.id.activity_game_pauseButton);
         mLabelTimer = findViewById(R.id.activity_game_labelTimer);
         mScoreNumber = findViewById(R.id.activity_game_scoreNumber);
+        mLabelAction = findViewById(R.id.activity_game_labelAction);
 
         partie = new Partie(mLabelTimer);
 
@@ -320,6 +322,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
                 Random rand = new Random();
                 actionSelected = rand.nextInt(liste_actions.size());
             }while(actionSelected == previousAction);
+            mLabelAction.setText(liste_actions.get(actionSelected).toString());
         }
     }
 }
