@@ -20,6 +20,7 @@ public class EndGamePopUpActivity extends AppCompatActivity {
     private Button mQuitButton;
     private Button mReplayButton;
     private TextView mScoreNumber;
+    private int endGameScore = -1;
     public static final int RC_GAME = 1;
     public static final int ENDGAME_POPUP = 3;
 
@@ -43,8 +44,9 @@ public class EndGamePopUpActivity extends AppCompatActivity {
         mScoreNumber = findViewById(R.id.endgame_popup_scoreNumber);
 
         Intent scoreGameActivity = getIntent();
-        final int scoreNumber = scoreGameActivity.getIntExtra("scoreNumber", 45);
+        final int scoreNumber = scoreGameActivity.getIntExtra("scoreNumber", -1);
         mScoreNumber.setText(Integer.toString(scoreNumber));
+        endGameScore = scoreNumber;
 
         mQuitButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,5 +71,14 @@ public class EndGamePopUpActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+    @Override
+    public void onBackPressed()
+    {
+        Log.d("ACTIVITY","ça commence !");
+        Intent i = new Intent();
+        i.putExtra("score",endGameScore);
+        setResult(ENDGAME_POPUP,i);
+        finish();
     }
 }

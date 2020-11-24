@@ -16,7 +16,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".controller.EndGamePopUpActivity" android:theme="@style/AppTheme.PopUpTheme"></activity>
-        <activity android:name=".controller.PausePopUpActivity" android:theme="@style/AppTheme.PopUpTheme"/>
         <activity android:name=".controller.GameActivity" />
         <activity android:name=".controller.ScoreActivity" />
         <activity android:name=".controller.MainActivity">

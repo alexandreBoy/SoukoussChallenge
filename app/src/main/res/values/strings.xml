@@ -10,7 +10,6 @@
     <string name="labelPause">Le jeu est en pause</string>
     <string name="buttonQuit">Quitter</string>
     <string name="buttonResume">Reprendre</string>
-    <string name="contentDescriptionIB">Pause button</string>
     <string name="actionShake">Secouez votre téléphone !</string>
     <string name="actionTurnOver">Retournez votre téléphone !</string>
     <string name="actionSwipeLeft">Faites un swipe vers la gauche !</string>

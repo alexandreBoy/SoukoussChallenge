@@ -94,18 +94,4 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.25"/>
-
-    <ImageButton
-        android:id="@+id/activity_game_pauseButton"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        app:layout_constraintLeft_toLeftOf="@id/activityGame_guideline3"
-        app:layout_constraintRight_toRightOf="@id/activityGame_guideline4"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="@id/activityGame_guideline1"
-        android:src="@drawable/baseline_pause_black_18dp"
-        android:contentDescription="@string/contentDescriptionIB" />
-
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>
