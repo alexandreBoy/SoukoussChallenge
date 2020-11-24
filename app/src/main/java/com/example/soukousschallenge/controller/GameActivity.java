@@ -9,10 +9,12 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -51,6 +53,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     private Sensor mAccelerometerSensor;
     private Sensor mGravitySensor;
     private boolean mFacingDown;
+    private MediaPlayer mPlayer;
 
     private float mAccel;
     private float mAccelCurrent;
@@ -131,7 +134,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
             if (mAccel > 12 && !partie.isFinished()){
                 if(actionSelected == 0 ){
                     incrementScore((String) mScoreNumber.getText());
-                    vibrate();
+                    play(mScoreNumber);
                     pickAction();
                 }else{
                     vibrate();
@@ -150,6 +153,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
                     if (actionSelected == 1){
                         incrementScore((String) mScoreNumber.getText());
                         error = 0;
+                        play(mScoreNumber);
                         pickAction();
                     }else{
                         error++;
@@ -209,6 +213,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
             if(actionSelected == 6){
                 incrementScore((String) mScoreNumber.getText());
                 error = 0;
+                play(mScoreNumber);
                 pickAction();
             }else{
                 error++;
@@ -230,6 +235,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
             if(actionSelected == 7){
                 incrementScore((String) mScoreNumber.getText());
                 error = 0;
+                play(mScoreNumber);
                 pickAction();
             }else{
                 error++;
@@ -276,6 +282,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
             if(actionSelected == 8){
                 incrementScore((String) mScoreNumber.getText());
                 error = 0;
+                play(mScoreNumber);
                 pickAction();
             }else{
                 error++;
@@ -298,6 +305,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
             if(actionSelected == 2){
                 incrementScore((String) mScoreNumber.getText());
                 error = 0;
+                play(mScoreNumber);
                 pickAction();
             }else{
                 error++;
@@ -317,6 +325,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
             if(actionSelected == 3){
                 incrementScore((String) mScoreNumber.getText());
                 error = 0;
+                play(mScoreNumber);
                 pickAction();
             }else{
                 error++;
@@ -335,6 +344,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
             if(actionSelected == 4){
                 incrementScore((String) mScoreNumber.getText());
                 error = 0;
+                play(mScoreNumber);
                 pickAction();
             }else{
                 error++;
@@ -353,6 +363,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
             if(actionSelected == 5){
                 incrementScore((String) mScoreNumber.getText());
                 error = 0;
+                play(mScoreNumber);
                 pickAction();
             }else{
                 error++;
@@ -406,5 +417,34 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
             }while(actionSelected == previousAction);
             mLabelAction.setText(liste_actions.get(actionSelected).getActionText(this.getApplicationContext()));
         }
+    }
+
+    public void stop(){
+        if(mPlayer != null)
+        {
+            mPlayer.release();
+            mPlayer = null;
+        }
+    }
+
+    public void play(View v)
+    {
+        stop();
+        mPlayer = MediaPlayer.create(this, R.raw.successsoundeffect);
+        mPlayer.setOnCompletionListener(
+                new MediaPlayer.OnCompletionListener() {
+                    @Override
+                    public void onCompletion(MediaPlayer mp) {
+                        stop();
+                    }
+                }
+        );
+        mPlayer.start();
+    }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        stop();
     }
 }
