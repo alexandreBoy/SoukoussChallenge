@@ -104,6 +104,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
             @Override
             public void onChange(){
                 Intent endGamePopUpActivity = new Intent(GameActivity.this, EndGamePopUpActivity.class);
+                endGamePopUpActivity.putExtra("scoreNumber", Integer.valueOf((String) mScoreNumber.getText()));
                 startActivityForResult(endGamePopUpActivity, ENDGAME_POPUP);
             }
         });

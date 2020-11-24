@@ -20,7 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.4" />
+        app:layout_constraintGuide_percent="0.3" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/endgame_popup_guideline3"
@@ -53,6 +53,29 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@+id/endgame_popup_guideline1"
         app:layout_constraintBottom_toTopOf="@+id/endgame_popup_guideline2"/>
+
+    <TextView
+        android:id="@+id/endgame_popup_scoreSentence"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="100sp"
+        android:text="@string/labelScoreSentence"
+        android:textSize="24sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/endgame_popup_guideline2"
+        app:layout_constraintBottom_toTopOf="@+id/endgame_popup_guideline4"/>
+
+    <TextView
+        android:id="@+id/endgame_popup_scoreNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/scoreNumber"
+        android:textSize="50sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/endgame_popup_scoreSentence"
+        app:layout_constraintBottom_toTopOf="@+id/endgame_popup_guideline4"/>
 
     <Button
         android:id="@+id/endgame_popup_quitButton"
