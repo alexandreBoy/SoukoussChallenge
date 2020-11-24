@@ -21,5 +21,6 @@ public class ScoreActivity extends AppCompatActivity {
 
         mBestScoresList = findViewById(R.id.activity_score_bestScoresList);
         mBestScoresLabel = findViewById(R.id.activity_score_bestScoresLabel);
+        //mBestScoresList.setAdapter();
     }
 }

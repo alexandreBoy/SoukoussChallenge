@@ -16,7 +16,9 @@ import com.example.soukousschallenge.R;
 import com.example.soukousschallenge.model.Partie;
 import com.example.soukousschallenge.model.Score;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
         mStartButton = findViewById(R.id.activity_main_startButton);
         mScoreButton = findViewById(R.id.activity_main_scoreButton);
 
+        loadData();
 
         mStartButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,23 +74,35 @@ public class MainActivity extends AppCompatActivity {
                     Log.d("ACTIVITY","Erreur de sauvegarde !");
                 }else{
                     Log.d("ACTIVITY","C'est magnifique !! Score : "+score);
-                    //loadData(); // On charge le score
-                    //scores.add() // On ajoute le score à la liste
-                    //saveData(); // On save le score
+                    loadData(); // On charge la liste des scores
+                    Score score_to_add = new Score();
+                    score_to_add.setValeurScore(score);
+                    scores.add(score_to_add); // On ajoute le nouveau score
+                    saveData(); // On save la liste des scores avec le nouveau score
                 }
             }
         }
     }
 
-    /*private void saveData(){
+    private void saveData(){
         //Sauvegarde de la liste des tirages
         SharedPreferences sharedPreferences = getSharedPreferences("shared preferences", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         Gson gson = new Gson();
-        String json = gson.toJson();
-        editor.putString("draws list",json);
+        String json = gson.toJson(scores);
+        editor.putString("scores list",json);
         editor.apply();
-    }*/
+    }
+
+    private void loadData(){
+        //Chargement de la liste des tirages
+        SharedPreferences sharedPreferences = getSharedPreferences("shared preferences", MODE_PRIVATE);
+        Gson gson = new Gson();
+
+        String json = sharedPreferences.getString("scores list", null);
+        Type type = new TypeToken<List<Score>>() {}.getType();
+        scores = gson.fromJson(json,type);
+    }
 
 
 }
