@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TableLayout;
 import android.widget.TextView;
@@ -23,6 +25,7 @@ public class ScoreActivity extends AppCompatActivity {
 
     private ListView mBestScoresList;
     private TextView mBestScoresLabel;
+    private ImageButton mDeleteButton;
     private List<Score> scores = new ArrayList<>();
 
     @Override
@@ -32,6 +35,14 @@ public class ScoreActivity extends AppCompatActivity {
 
         mBestScoresList = findViewById(R.id.activity_score_bestScoresList);
         mBestScoresLabel = findViewById(R.id.activity_score_bestScoresLabel);
+        mDeleteButton = findViewById(R.id.activity_score_deleteButton);
+
+        mDeleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Suppression de tous les scores
+            }
+        });
 
         loadData();
         Log.d("ACTIVITY",Integer.toString(scores.size()));

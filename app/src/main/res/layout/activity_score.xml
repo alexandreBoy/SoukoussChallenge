@@ -27,10 +27,63 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="30dp"
+        android:layout_marginBottom="100dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/activity_score_bestScoresLabel"
         app:layout_constraintBottom_toBottomOf="parent" />
+
+    <ImageButton
+        android:id="@+id/activity_score_deleteButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/baseline_delete_black_18dp"
+        android:background="#FFF"
+        android:contentDescription="@string/contentDescriptionDelete"
+        app:layout_constraintBottom_toTopOf="@id/activity_score_guideline2"
+        app:layout_constraintTop_toBottomOf="@id/activity_score_guideline1"
+        app:layout_constraintLeft_toRightOf="@id/activity_score_guideline3"
+        app:layout_constraintRight_toLeftOf="@id/activity_score_guideline4"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="90dp"
+        android:layout_marginEnd="90dp"
+        android:textSize="18sp"
+        android:text="@string/labelDeleteAll"
+        app:layout_constraintBottom_toTopOf="@id/activity_score_guideline2"
+        app:layout_constraintTop_toBottomOf="@id/activity_score_guideline1"
+        app:layout_constraintLeft_toRightOf="@+id/activity_score_deleteButton"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/activity_score_guideline1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.89" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/activity_score_guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.95" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/activity_score_guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.05" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/activity_score_guideline4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.15" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

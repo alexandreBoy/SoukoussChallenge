@@ -24,4 +24,6 @@
     <string name="labelEndGame">La partie est terminée !</string>
     <string name="labelScoreSentence">Votre score est de :</string>
     <string name="buttonReplay">Rejouer</string>
+    <string name="contentDescriptionDelete">Tout supprimer</string>
+    <string name="labelDeleteAll">Supprimer tout les scores</string>
 </resources>
