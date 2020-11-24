@@ -1,8 +1,8 @@
 package com.example.soukousschallenge.model;
 
-import java.util.Date;
+import java.io.Serializable;
 
-public class Score{
+public class Score implements Serializable{
     int valeurScore;
 
     public Score(){

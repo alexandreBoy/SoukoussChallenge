@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Button mStartButton;
     private Button mScoreButton;
-    private List<Score> scores = new ArrayList<>();
+    private List<Score> scores;
     public static final int RC_SCORE = 4;
     public static final int RC_GAME = 1;
 
@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
         mStartButton = findViewById(R.id.activity_main_startButton);
         mScoreButton = findViewById(R.id.activity_main_scoreButton);
+        scores = new ArrayList<Score>();
 
         loadData();
 
@@ -77,8 +78,9 @@ public class MainActivity extends AppCompatActivity {
                     loadData(); // On charge la liste des scores
                     Score score_to_add = new Score();
                     score_to_add.setValeurScore(score);
-                    scores.add(score_to_add); // On ajoute le nouveau score
+                    scores.add(score_to_add); // On ajoute le nouveau score*/
                     saveData(); // On save la liste des scores avec le nouveau score
+                    Log.d("ACTIVITY",Integer.toString(scores.size()));
                 }
             }
         }
@@ -92,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
         String json = gson.toJson(scores);
         editor.putString("scores list",json);
         editor.apply();
+        Log.d("ACTIVITY","ça save !!");
     }
 
     private void loadData(){
@@ -102,6 +105,11 @@ public class MainActivity extends AppCompatActivity {
         String json = sharedPreferences.getString("scores list", null);
         Type type = new TypeToken<List<Score>>() {}.getType();
         scores = gson.fromJson(json,type);
+
+        if(scores == null){
+            scores = new ArrayList<Score>();
+        }
+        Log.d("ACTIVITY","ça load !!");
     }
 
 
