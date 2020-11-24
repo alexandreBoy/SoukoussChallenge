@@ -26,6 +26,7 @@ public class ScoreActivity extends AppCompatActivity {
     private ListView mBestScoresList;
     private TextView mBestScoresLabel;
     private ImageButton mDeleteButton;
+    private ScoreAdapter mScoreAdapter;
     private List<Score> scores = new ArrayList<>();
 
     @Override
@@ -37,16 +38,20 @@ public class ScoreActivity extends AppCompatActivity {
         mBestScoresLabel = findViewById(R.id.activity_score_bestScoresLabel);
         mDeleteButton = findViewById(R.id.activity_score_deleteButton);
 
+        loadData();
+        Log.d("ACTIVITY",Integer.toString(scores.size()));
+        mScoreAdapter = new ScoreAdapter(this,scores);
+        mBestScoresList.setAdapter(mScoreAdapter);
+
         mDeleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Suppression de tous les scores
+                scores.clear();
+                saveData();
+                mScoreAdapter.notifyDataSetChanged();
             }
         });
-
-        loadData();
-        Log.d("ACTIVITY",Integer.toString(scores.size()));
-        mBestScoresList.setAdapter(new ScoreAdapter(this,scores));
     }
 
     private void saveData(){
