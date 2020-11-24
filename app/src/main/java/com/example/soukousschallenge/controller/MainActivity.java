@@ -65,11 +65,12 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if(requestCode== RC_GAME){
-            if(data.hasExtra("Score")){
-                int score = data.getIntExtra("Score",-1);
+            if(data.hasExtra("score")){
+                int score = data.getIntExtra("score",-1);
                 if(score == -1){
-                    Log.d("SAVE","Erreur de sauvegarde !");
+                    Log.d("ACTIVITY","Erreur de sauvegarde !");
                 }else{
+                    Log.d("ACTIVITY","C'est magnifique !! Score : "+score);
                     //loadData(); // On charge le score
                     //scores.add() // On ajoute le score à la liste
                     //saveData(); // On save le score

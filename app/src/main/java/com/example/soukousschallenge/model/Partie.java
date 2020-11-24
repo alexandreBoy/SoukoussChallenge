@@ -18,7 +18,7 @@ public class Partie{
 
 
     public Partie(TextView t){
-        duree = 30000;
+        duree = 3000;
         tempsRestant = duree;
         score = new Score();
         affichageChrono = t;
@@ -89,7 +89,7 @@ public class Partie{
 
     public void setFinished(boolean finished){
         isFinished = finished;
-        if( finished && cl != null) cl.onChange();
+        if( isFinished() && cl != null) cl.onChange();
     }
 
 
@@ -110,7 +110,6 @@ public class Partie{
 
             }
         }.start();
-
         isChronoRunning = true;
         setFinished(false);
 

@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -20,6 +21,7 @@ public class EndGamePopUpActivity extends AppCompatActivity {
     private Button mReplayButton;
     private TextView mScoreNumber;
     public static final int RC_GAME = 1;
+    public static final int ENDGAME_POPUP = 3;
 
     @SuppressLint("SetTextI18n")
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
@@ -47,10 +49,12 @@ public class EndGamePopUpActivity extends AppCompatActivity {
         mQuitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(EndGamePopUpActivity.this, MainActivity.class);
+                //On prépare ici l'intent à renvoyer;
+                Log.d("ACTIVITY","ça commence !");
+                Intent i = new Intent();
                 i.putExtra("score", scoreNumber);
-                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(i);
+                setResult(ENDGAME_POPUP,i);
+                finish();
             }
         });
 
