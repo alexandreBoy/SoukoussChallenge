@@ -15,13 +15,13 @@
         android:textSize="28sp"
         android:textAlignment="center"
         android:gravity="center_horizontal"
-        app:layout_constraintBottom_toTopOf="@id/activity_score_bestScoresTable"
+        app:layout_constraintBottom_toTopOf="@id/activity_score_bestScoresList"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TableLayout
-        android:id="@+id/activity_score_bestScoresTable"
+    <ListView
+        android:id="@+id/activity_score_bestScoresList"
         android:layout_width="match_parent"
         android:layout_height="500dp"
         android:layout_marginLeft="20dp"
