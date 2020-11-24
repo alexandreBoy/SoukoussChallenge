@@ -61,8 +61,12 @@ public class EndGamePopUpActivity extends AppCompatActivity {
         mReplayButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(EndGamePopUpActivity.this, GameActivity.class);
-                startActivityForResult(i,RC_GAME);
+                //On prépare ici l'intent à renvoyer
+                Log.d("TEST","ça part de là !");
+                Intent i = new Intent();
+                i.putExtra("replay",1);
+                setResult(ENDGAME_POPUP,i);
+                finish();
             }
         });
     }

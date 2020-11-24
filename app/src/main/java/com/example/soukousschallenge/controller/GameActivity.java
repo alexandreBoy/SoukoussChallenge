@@ -458,6 +458,20 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
                     finish();
 
                 }
+            }else{
+                if (data.hasExtra("replay")){
+                    int replay = data.getIntExtra("replay",-1);
+                    if( replay == -1){
+                        Log.d("TEST", "Erreur !");
+                    }else{
+                        Log.d("TEST","CA PASSE !");
+                        Intent i = new Intent();
+                        i.putExtra("replay",replay);
+                        setResult(RC_GAME,i);
+                        finish();
+                    }
+
+                }
             }
         }
     }

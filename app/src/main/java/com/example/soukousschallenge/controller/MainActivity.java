@@ -82,6 +82,17 @@ public class MainActivity extends AppCompatActivity {
                     saveData(); // On save la liste des scores avec le nouveau score
                     Log.d("ACTIVITY",Integer.toString(scores.size()));
                 }
+            }else{
+                if (data.hasExtra("replay")){
+                    int replay = data.getIntExtra("replay",-1);
+                    if( replay == -1){
+                        Log.d("ACTIVITY", "Erreur !");
+                    }else{
+                        Intent gameActivity = new Intent(MainActivity.this, GameActivity.class);
+                        startActivityForResult(gameActivity,RC_GAME);
+                    }
+
+                }
             }
         }
     }
