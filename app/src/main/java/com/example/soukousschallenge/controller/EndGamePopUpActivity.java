@@ -52,7 +52,6 @@ public class EndGamePopUpActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //On prépare ici l'intent à renvoyer;
-                Log.d("ACTIVITY","ça commence !");
                 Intent i = new Intent();
                 i.putExtra("score", scoreNumber);
                 setResult(ENDGAME_POPUP,i);
@@ -64,7 +63,6 @@ public class EndGamePopUpActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //On prépare ici l'intent à renvoyer
-                Log.d("TEST","ça part de là !");
                 Intent i = new Intent();
                 i.putExtra("replay",1);
                 setResult(ENDGAME_POPUP,i);
@@ -75,7 +73,6 @@ public class EndGamePopUpActivity extends AppCompatActivity {
     @Override
     public void onBackPressed()
     {
-        Log.d("ACTIVITY","ça commence !");
         Intent i = new Intent();
         i.putExtra("score",endGameScore);
         setResult(ENDGAME_POPUP,i);

@@ -40,7 +40,6 @@ public class ScoreActivity extends AppCompatActivity {
 
         loadData();
         scores = Score.descendingSort((ArrayList<Score>) scores);
-        Log.d("ACTIVITY",Integer.toString(scores.size()));
         mScoreAdapter = new ScoreAdapter(this,scores);
         mBestScoresList.setAdapter(mScoreAdapter);
 
@@ -63,7 +62,6 @@ public class ScoreActivity extends AppCompatActivity {
         String json = gson.toJson(scores);
         editor.putString("scores list",json);
         editor.apply();
-        Log.d("ACTIVITY","ça save !!");
     }
 
     private void loadData(){
@@ -78,6 +76,5 @@ public class ScoreActivity extends AppCompatActivity {
         if(scores == null){
             scores = new ArrayList<Score>();
         }
-        Log.d("ACTIVITY","ça load !!");
     }
 }

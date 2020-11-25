@@ -73,27 +73,20 @@ public class MainActivity extends AppCompatActivity {
             if(requestCode== RC_GAME){
                 if(data.hasExtra("score")){
                     int score = data.getIntExtra("score",-1);
-                    if(score == -1){
-                        Log.d("ACTIVITY","Erreur de sauvegarde !");
-                    }else{
-                        Log.d("ACTIVITY","C'est magnifique !! Score : "+score);
+                    if(score != -1){
                         loadData(); // On charge la liste des scores
                         Score score_to_add = new Score();
                         score_to_add.setValeurScore(score);
-                        scores.add(score_to_add); // On ajoute le nouveau score*/
+                        scores.add(score_to_add); // On ajoute le nouveau score
                         saveData(); // On save la liste des scores avec le nouveau score
-                        Log.d("ACTIVITY",Integer.toString(scores.size()));
                     }
                 }else{
                     if (data.hasExtra("replay")){
                         int replay = data.getIntExtra("replay",-1);
-                        if( replay == -1){
-                            Log.d("ACTIVITY", "Erreur !");
-                        }else{
+                        if( replay != -1){
                             Intent gameActivity = new Intent(MainActivity.this, GameActivity.class);
                             startActivityForResult(gameActivity,RC_GAME);
                         }
-
                     }
                 }
             }
@@ -108,7 +101,6 @@ public class MainActivity extends AppCompatActivity {
         String json = gson.toJson(scores);
         editor.putString("scores list",json);
         editor.apply();
-        Log.d("ACTIVITY","ça save !!");
     }
 
     private void loadData(){
@@ -123,8 +115,5 @@ public class MainActivity extends AppCompatActivity {
         if(scores == null){
             scores = new ArrayList<Score>();
         }
-        Log.d("ACTIVITY","ça load !!");
     }
-
-
 }

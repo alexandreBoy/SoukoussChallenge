@@ -48,7 +48,6 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     private TextView mLabelAction;
     public static final int ENDGAME_POPUP = 3;
     public static final int RC_GAME = 1;
-    private static final String TAG = "DETECTION";
     private SensorManager mSensorManager;
     private Sensor mAccelerometerSensor;
     private Sensor mGravitySensor;
@@ -437,23 +436,16 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
             if (requestCode == ENDGAME_POPUP) {
                 if (data.hasExtra("score")) {
                     int score = data.getIntExtra("score", -1);
-                    if (score == -1) {
-                        Log.d("ACTIVITY", "Erreur de sauvegarde !");
-                    } else {
-                        Log.d("ACTIVITY", "C'est Good !");
+                    if (score != -1) {
                         Intent i = new Intent();
                         i.putExtra("score", score);
                         setResult(RC_GAME, i);
                         finish();
-
                     }
                 } else {
                     if (data.hasExtra("replay")) {
                         int replay = data.getIntExtra("replay", -1);
-                        if (replay == -1) {
-                            Log.d("TEST", "Erreur !");
-                        } else {
-                            Log.d("TEST", "CA PASSE !");
+                        if (replay != -1) {
                             Intent i = new Intent();
                             i.putExtra("replay", replay);
                             setResult(RC_GAME, i);
