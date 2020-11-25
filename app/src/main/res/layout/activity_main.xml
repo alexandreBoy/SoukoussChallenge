@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/customborder"
     tools:context=".controller.MainActivity">
 
     <TextView
@@ -26,6 +27,7 @@
         android:textSize="24sp"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="50dp"
+        android:background="@drawable/custom_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -39,6 +41,7 @@
         android:textSize="24sp"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="50dp"
+        android:background="@drawable/custom_button"
         app:layout_constraintBottom_toTopOf="@id/activityMain_guideline1"
         app:layout_constraintTop_toBottomOf="@id/activity_main_startButton"
         app:layout_constraintStart_toStartOf="parent"
