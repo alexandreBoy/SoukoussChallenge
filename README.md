@@ -14,6 +14,6 @@ en M1 Informatique à l'Université de La Réunion.
 
 ## Fonctionnalités
 L'application Soukouss Challenge permet de :
-* Jouer à une partie où il faut réaliser des actions qui s'affiche à l'écran impliquant l'utilisation des capteurs du téléphone
+* Réaliser des actions impliquant l'utilisation des capteurs du téléphone dans le temps imparti
 * Voir les scores des parties précédentes
 * Sauvegarder les scores
