@@ -47,12 +47,13 @@ public class ScoreAdapter extends BaseAdapter{
         view = inflater.inflate(R.layout.liste_scores_items,null);
         Score currentItem = getItem(i);
         String scoreValue = Integer.toString(currentItem.getValeurScore());
+        String order = Integer.toString(scores.indexOf(currentItem)+1);
 
         TextView scoreOrder_tv = view.findViewById(R.id.activity_score_order_txt);
         TextView scoreValue_tv = view.findViewById(R.id.activity_score_value_txt);
 
 
-        scoreOrder_tv.setText("YOUHOUUU");
+        scoreOrder_tv.setText(order);
         scoreValue_tv.setText(scoreValue);
         return view;
     }

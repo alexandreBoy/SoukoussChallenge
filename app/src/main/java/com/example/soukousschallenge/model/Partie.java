@@ -18,7 +18,7 @@ public class Partie{
 
 
     public Partie(TextView t){
-        duree = 3000;
+        duree = 30000;
         tempsRestant = duree;
         score = new Score();
         affichageChrono = t;

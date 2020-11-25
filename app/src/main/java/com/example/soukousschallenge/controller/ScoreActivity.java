@@ -27,7 +27,7 @@ public class ScoreActivity extends AppCompatActivity {
     private TextView mBestScoresLabel;
     private ImageButton mDeleteButton;
     private ScoreAdapter mScoreAdapter;
-    private List<Score> scores = new ArrayList<>();
+    private List<Score> scores = new ArrayList<Score>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +39,7 @@ public class ScoreActivity extends AppCompatActivity {
         mDeleteButton = findViewById(R.id.activity_score_deleteButton);
 
         loadData();
+        scores = Score.descendingSort((ArrayList<Score>) scores);
         Log.d("ACTIVITY",Integer.toString(scores.size()));
         mScoreAdapter = new ScoreAdapter(this,scores);
         mBestScoresList.setAdapter(mScoreAdapter);
