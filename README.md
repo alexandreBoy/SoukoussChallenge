@@ -3,7 +3,7 @@
 Une application Android qui permet de jouer à un jeu de rapidité.
 
 ## Démarrage
-Un clone en local de ce projet peut être ouvert dans Android Studio pour être testé sur votre smartphone.
+L'APK de l'application est disponible dans les releases pour être testé sur votre smartphone.
 
 ## Auteurs
 Réalisé par David Boisedu (https://github.com/DavidBoisedu) et Alexandre Boyer (https://github.com/d3xing).
